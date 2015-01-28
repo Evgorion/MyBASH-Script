@@ -1,0 +1,34 @@
+#!/bin/bash
+ 
+# "subst", Сценарий замены по шаблону
+# т.е., "subst Smith Jones letter.txt".
+ 
+ARGS=3
+E_BADARGS=65   # Неверное число аргументов.
+ 
+if [ $# -ne "$ARGS" ]
+# Проверка числа аргументов.
+then
+  echo "Проядок использования: `basename $0` old-pattern new-pattern filename"
+  exit $E_BADARGS
+fi
+
+old_pattern=$1
+new_pattern=$2
+
+if [ -f "$3" ]
+then
+    file_name=$3
+else
+    echo "Файл \"$3\" не найден."
+    exit $E_BADARGS
+fi
+ 
+# Здесь, собственно, выполняется сама работа по поиску и замене.
+sed -e "s/$old_pattern/$new_pattern/g" $file_name
+# 's' -- команда "substitute" (замены),
+# а /pattern/ -- задает шаблон искомого текста.
+# "g" -- флаг "global" (всеобщий), означает "выполнить подстановку для *каждого*
+# обнаруженного $old_pattern во всех строках, а не только в первой строке.
+ 
+exit 0    # При успешном завершении сценария -- вернуть 0.

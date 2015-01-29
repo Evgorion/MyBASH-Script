@@ -1,0 +1,22 @@
+#!/bin/bash
+# idelete.sh: Удаление файла по номеру inode.
+ 
+#  Этот прием используется в тех случаях, когда имя файла начинается с недопустимого символа,
+#+ например, ? или -.
+ 
+ARGCOUNT=1                      # Имя файла должно быть передано в сценарий.
+E_WRONGARGS=70
+E_FILE_NOT_EXIST=71
+E_CHANGED_MIND=72
+ 
+if [ $# -ne "$ARGCOUNT" ]
+then
+  echo "Порядок использования: `basename $0` filename"
+  exit $E_WRONGARGS
+fi
+ 
+if [ ! -e "$1" ]
+then
+  echo "Файл \""$1"\" не найден."
+  exit $E_FILE_NOT_EXIST
+fi
